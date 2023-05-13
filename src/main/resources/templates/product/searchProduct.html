@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+    <title>Главная страница</title>
+</head>
+<body>
+    <header>
+        Добро пожаловать в мир автоматизации
+    </header>
+    <header>
+        Поиск и сортировка товаров
+    </header>
+    <article>
+        <form style="display: inline" method="get" th:action="@{/person account}">
+            <button type="submit">Кабинет</button>
+        </form>
+        <form style="display: inline" method="get" th:action="@{/cart}">
+            <button type="submit">Корзина</button>
+        </form>
+        <form style="display: inline" method="get" th:action="@{/orders}">
+            <button type="submit">Заказы</button>
+        </form>
+        <form style="display: inline" method="post" th:action="@{/logout}">
+            <button type="submit">Выход</button>
+        </form>
+    </article>
+    <main>
+        <form th:method="POST" th:action="@{/product/search}">
+            <fieldset>
+                <legend>Фильтрация</legend>
+                <label for="search">Наименование</label>
+                <input type="text" id="search" name="search" th:value="*{value_search}">
+                <br>
+                <label style="display: inline" for="ot">Цена от</label>
+                <input style="display: inline; width: 150px" type="text" name="ot" id="ot" th:value="*{value_price_ot}">
+                <label style="display: inline" for="do">до</label>
+                <input style="display: inline; width: 150px" type="text" name="do" id="do" th:value="*{value_price_do}">
+            </fieldset>
+            <fieldset style="width: 500px; align-content: center">
+                <legend>Сортировка</legend>
+                <fieldset style="display: inline; width: 200px">
+                    <legend>Категория</legend>
+                    <label for="sensor">Датчики</label>
+                    <input style="vertical-align: middle; margin:0;" type="radio" id="sensor" name="contract" value="sensor">
+                    <br>
+                    <label for="driver">Привода</label>
+                    <input style="vertical-align: middle; margin:0;" type="radio" id="driver" name="contract" value="driver">
+                    <br>
+                    <label for="plc">ПЛК</label>
+                    <input style="vertical-align: middle; margin:0;" type="radio" id="plc" name="contract" value="plc">
+                </fieldset>
+                <fieldset style="display: inline; width: 200px">
+                    <legend>Цена</legend>
+                    <label for="ascending_price">Возрастание</label>
+                    <input  style="text-align: left" type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+                    <br>
+                    <label for="descending_price">Убывание</label>
+                    <input  style="text-align: left" type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+                    <br>
+                </fieldset>
+            </fieldset>
+            <input type="submit" value="Выполнить">
+        </form>
+    </main>
+    <main>
+        <h3>Результат поиска, cортировки, фильтрации </h3>
+        <div th:each="product : ${search_product}">
+            <div class="card">
+                <img th:src="'/img/' + ${product.imageList[0].getFileName()}"><br>
+                <div class="green_area">
+                    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+                </div>
+                <div class="green_area">
+                    <div th:text="'Цена: ' + ${product.getPrice()}"></div>
+                </div>
+                <form style="display: inline" method="get" th:action="@{/cart/add/{id}(id=${product.getId()})}">
+                    <button type="submit">Добавить в корзину</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

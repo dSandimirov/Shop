@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+    <title>Главная страница</title>
+</head>
+<body>
+    <header>
+        Добро пожаловать в мир автоматизации
+    </header>
+    <header>
+        Главная страница
+    </header>
+    <article>
+        <form style="display: inline" method="get" th:action="@{/go search}">
+            <button type="submit">Поиск</button>
+        </form>
+        <form style="display: inline" method="get" th:action="@{/authentication}">
+            <button type="submit">Вход</button>
+        </form>
+        <form style="display: inline" method="get" th:action="@{/registration}">
+            <button type="submit">Регистрация</button>
+        </form>
+    </article>
+    <main>
+        <h3>Доступные товары </h3>
+        <div class="card" th:each="product : ${products}">
+            <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="400px"><br>
+            <div class="green_area">
+                <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+            </div>
+            <div class="green_area">
+                <div th:text="'Цена: ' + ${product.getPrice()}"></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

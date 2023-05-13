@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/index.css}" type="text/css" rel="stylesheet">
+    <title>Информация о товаре</title>
+</head>
+<body>
+    <header>
+        Добро пожаловать в мир автоматизации
+    </header>
+    <header>
+        Информация о товаре
+    </header>
+    <article>
+        <button id='btn1' type="button">Назад</button>
+    </article>
+    <main>
+        <div class="card">
+            <div class="green_area" th:text="${product.getTitle()}"></div>
+            <div class="green_area">
+                <pre th:text="${product.getDescription()}"></pre>
+            </div>
+            <div class="green_area" th:text="'Цена: ' + ${product.getPrice()}"></div>
+            <div class="green_area" th:text="'Cклад: ' + ${product.getWarehouse()}"></div>
+            <div class="green_area" th:text="'Продавец: ' + ${product.getSeller()}"></div>
+            <div class="green_area" th:text="'Категория: ' + ${product.getCategory().getName()}"></div>
+            <div th:each="img : ${product.getImageList()}">
+                <img th:src="'/img/' + ${img.getFileName()}">
+            </div>
+        </div>
+    </main>
+    <article>
+        <button id='btn2' type="button">Назад</button>
+    </article>
+    <script>
+        btn1.onclick = function(){history.back()}
+        btn2.onclick = function (){history.back()}
+    </script>
+</body>
+</html>
